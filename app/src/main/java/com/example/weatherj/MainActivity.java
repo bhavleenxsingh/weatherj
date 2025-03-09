@@ -50,9 +50,14 @@ public class MainActivity extends AppCompatActivity {
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String city = searchbox.getText().toString();
-                url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=d73050f0c136744314578782b3409ede";
-                new Fetch().execute();
+                try {
+                    String city = searchbox.getText().toString();
+                    url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=d73050f0c136744314578782b3409ede";
+                    new Fetch().execute();
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Error loading city's weather. Please check spellings and try again!", Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
     }
@@ -84,8 +89,25 @@ public class MainActivity extends AppCompatActivity {
                 try{
                     JSONObject json = new JSONObject(results);
                     JSONObject main  = json.getJSONObject("main");
+                    JSONObject cloud = json.getJSONObject("clouds");
+
                     double temp = main.getDouble("temp");
-                    result.setText("Temperature is : " + temp + " C");
+                    int tempc = (int) (temp - 273.15);
+
+                    double feel = main.getDouble("feels_like");
+                    int feels = (int) (feel - 273.15);
+
+                    int humid = main.getInt("humidity");
+
+                    int cloudcount = cloud.getInt("all");
+
+
+
+                    result.setText("Temperature is : " + tempc + " \u00B0C \n" +
+                            "Feels Like : " + feels + " \u00B0C \n" +
+                            "Clouds : " + cloudcount + "\n" +
+                            "Humidity : " + humid + "%\n" +
+                            "");
                 }
                 catch (Exception e){
                     result.setText("Error loading Weather");
