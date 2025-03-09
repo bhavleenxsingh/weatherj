@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -20,6 +21,9 @@ import org.w3c.dom.Text;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     EditText searchbox;
     TextView result;
     String url;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         searchbtn = findViewById(R.id.searchbtn);
         searchbox = findViewById(R.id.searchbox);
         result = findViewById(R.id.result);
+        toolbar = findViewById(R.id.toolbar);
+
+        toolbar.setTitle("Bhavleen Singh");
 
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
         class Fetch extends AsyncTask<Void, Void, String>{
             @Override
             protected String doInBackground(Void... voids) {
@@ -79,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
                     return resultw.toString();
                 }
                 catch (Exception e){
-                 Toast.makeText(MainActivity.this, "Error! Please Try Again with Correct City!", Toast.LENGTH_SHORT).show();
                 return "Error : " + e.getMessage();
                 }
             }
@@ -90,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject json = new JSONObject(results);
                     JSONObject main  = json.getJSONObject("main");
                     JSONObject cloud = json.getJSONObject("clouds");
+                    JSONObject sys = json.getJSONObject("sys");
 
                     double temp = main.getDouble("temp");
                     int tempc = (int) (temp - 273.15);
@@ -101,19 +110,35 @@ public class MainActivity extends AppCompatActivity {
 
                     int cloudcount = cloud.getInt("all");
 
+                    long sunrise = sys.optLong("sunrise");
+                    String sunrisetime = unixtotime(sunrise);
+
+                    long sunset = sys.optLong("sunset");
+                    String sunsettime = unixtotime((sunset));
+
 
 
                     result.setText("Temperature is : " + tempc + " \u00B0C \n" +
                             "Feels Like : " + feels + " \u00B0C \n" +
-                            "Clouds : " + cloudcount + "\n" +
-                            "Humidity : " + humid + "%\n" +
+                            "Clouds : " + cloudcount + " %\n" +
+                            "Humidity : " + humid + " %\n" +
+                            "Sunrise : " + sunrisetime + ".\n" +
+                            "Sunset : " + sunsettime + ".\n" +
                             "");
                 }
                 catch (Exception e){
+                    Toast.makeText(MainActivity.this, "Error! Please Try Again. \n Use Correct spellings of the City!", Toast.LENGTH_SHORT).show();
                     result.setText("Error loading Weather");
                 }
             }
 
         }
 
+
+        public static String unixtotime(long unixseconds){
+
+            Date date = new Date(unixseconds * 1000L);
+            SimpleDateFormat dtfrmt = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+            return dtfrmt.format(date);
+        }
     }
