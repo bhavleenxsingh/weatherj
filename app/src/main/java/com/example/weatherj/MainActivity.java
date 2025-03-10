@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                    result.setText("Temperature is : " + tempc + " \u00B0C \n" +
+                    result.setText("Temperature : " + tempc + " \u00B0C \n" +
                             "Feels Like : " + feels + " \u00B0C \n" +
                             "Clouds : " + cloudcount + " %\n" +
                             "Humidity : " + humid + " %\n" +
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         public static String unixtotime(long unixseconds){
 
             Date date = new Date(unixseconds * 1000L);
-            SimpleDateFormat dtfrmt = new SimpleDateFormat("hh:mm A", Locale.getDefault());
+            SimpleDateFormat dtfrmt = new SimpleDateFormat("hh:mm a", Locale.getDefault());
             return dtfrmt.format(date);
         }
     }
