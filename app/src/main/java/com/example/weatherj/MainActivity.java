@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         result = findViewById(R.id.result);
         toolbar = findViewById(R.id.toolbar);
 
-        toolbar.setTitle("Bhavleen Singh");
+        toolbar.setTitle("Toolbar");
 
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
 
                     int cloudcount = cloud.getInt("all");
 
-                    long sunrise = sys.optLong("sunrise");
+                    long sunrise = sys.getLong("sunrise");
                     String sunrisetime = unixtotime(sunrise);
 
-                    long sunset = sys.optLong("sunset");
+                    long sunset = sys.getLong("sunset");
                     String sunsettime = unixtotime((sunset));
 
 
