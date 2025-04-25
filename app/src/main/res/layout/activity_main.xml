@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:background="#957AA2B4"
+    android:background="@color/bg"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/toolbar"
-            android:background="#951B4150"
+            android:background="@color/toolbarcolor"
             />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -47,8 +47,8 @@
             android:layout_toRightOf="@+id/textthe"
             android:fontFamily="cursive"
             android:padding="15sp"
-            android:text="The Weather"
-            android:textSize="60sp"
+            android:text="What its like in..."
+            android:textSize="45sp"
 
             />
 

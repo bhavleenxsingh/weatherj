@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         result = findViewById(R.id.result);
         toolbar = findViewById(R.id.toolbar);
 
-        toolbar.setTitle("Toolbar");
+        toolbar.setTitle("The Weather");
 
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
